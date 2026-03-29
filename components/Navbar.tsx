@@ -20,7 +20,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
-    <nav className="w-full sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
+    <nav className="w-full sticky top-0 z-50 bg-zinc-950/75 border-b border-white/5 backdrop-blur-md">
       <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-16">
 
         <Link href="/" className="text-white font-mono text-lg font-bold tracking-tight hover:text-zinc-300 transition-colors">ABC</Link>
