@@ -4,7 +4,12 @@ import Link from "next/link"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 
-const NAV_LINKS = [
+interface NavLink {
+    label: string
+    href: string
+}
+
+const NAV_LINKS: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Blog", href: "/blog" },
   { label: "Projects", href: "/projects" },
@@ -12,19 +17,19 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
     <nav className="w-full sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
       <div className="max-w-5xl mx-auto px-4 flex items-center justify-between h-16">
 
-        <Link href="/" className="text-white font-bold text-lg">ABC</Link>
+        <Link href="/" className="text-white font-mono text-lg font-bold tracking-tight hover:text-zinc-300 transition-colors">ABC</Link>
 
         {/* Desktop */}
         <ul className="hidden md:flex gap-8">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} className="text-zinc-400 text-sm hover:text-white">
+              <Link href={link.href} className="text-zinc-400 text-sm font-medium hover:text-white transition-colors">
                 {link.label}
               </Link>
             </li>
@@ -62,3 +67,10 @@ export default function Navbar() {
     </nav>
   )
 }
+
+
+
+
+
+
+
