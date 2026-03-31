@@ -45,3 +45,5 @@ next-env.d.ts
 
 # Except for the main README
 !README.md
+
+markdown
