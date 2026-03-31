@@ -4,38 +4,50 @@ import matter from "gray-matter"
 import type {Post} from "@/types/index"
 
 // path to content/blog directory - reused by both functions
-const contentDirectory = path.join(process.cwd(), "content/blog")
+const BLOG_DIR = path.join(process.cwd(), "content/blog")
 
 //return sorted array of all posts with frontmatter only (no content)
-export function getAllPosts(): Post[] {
+export function getAllPosts(): Omit<Post, "content">[] {
 
-    if(!fs.existsSync(contentDirectory)) return []
+    //read all filenames in the blog directory
+    const files = fs.readdirSync(BLOG_DIR)
 
-    return fs
-        .readdirSync(contentDirectory)  //read all files in the folder
+    //filter to only .mdx files
+    const mdxFiles = files.filter((file) => file.endsWith(".mdx"))
 
-        .filter(f => f.endsWith(".mdx"))  //keep only .mdx files
+    //map each file and extract frontmatter
+    const posts = mdxFiles.map((filename) => {
 
-        .map(filename => {
-            const raw = fs.readFileSync( //read file as utf string
-                path.join(contentDirectory, filename), "utf-8"
-            )
+        //strip .mdx extension to get the slug
+        const slug = filename.replace(".mdx", "")
 
-            const {data: frontmatter} = matter(raw) //extract YAML frontmatter, discard content
+        //build the full file path
+        const filePath = path.join(BLOG_DIR, filename)
 
-            const slug = filename.replace(/\.mdx$/, "") //strip .mdx extension to get slug
+        //read raw file content
+        const fileContent = fs.readFileSync(filePath, "utf-8")
 
-            return {slug, ...frontmatter} as Post //return slug + all fontmatter fields
-        })
+        //only need data (frontmatter) not content
+        const {data} = matter(fileContent)
 
-        .sort((a, b) =>  //sort newest first
-            new Date(b.date).getTime() - new Date(a.date).getTime())
+        //return post object
+        return {
+            slug,
+            title: data.title as string,
+            date: data.date as string,
+            description: data.description as string
+        }
+    })
+
+    return posts.sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )
 }
 
 //returns single post with frontmatter + complied MDX content
 export async function getPostBySlug(slug: string): Promise<Post> {
     
-    const filepath = path.join(contentDirectory, `${slug}.mdx`)  //build full path from slug
+    const filepath = path.join(BLOG_DIR, `${slug}.mdx`)  //build full path from slug
     
     if(!fs.existsSync(filepath)) {
         throw new Error(`Post not found: ${slug}`)
