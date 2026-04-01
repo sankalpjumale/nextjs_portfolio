@@ -47,15 +47,17 @@ export function getAllPosts(): Omit<Post, "content">[] {
 //returns single post with frontmatter + complied MDX content
 export async function getPostBySlug(slug: string): Promise<Post> {
     
-    const filepath = path.join(BLOG_DIR, `${slug}.mdx`)  //build full path from slug
-    
-    if(!fs.existsSync(filepath)) {
-        throw new Error(`Post not found: ${slug}`)
+    const filePath = path.join(BLOG_DIR, `${slug}.mdx`)  //build full path from slug
+
+    const fileContent = fs.readFileSync(filePath, "utf-8")
+
+    const {data, content} = matter(fileContent)
+
+    return {
+        slug,
+        title: data.title as string,
+        date: data.date as string,
+        description: data.description as string,
+        content //raw MDX string - rendered by next-mdx-remote in [slug]/page.tsx
     }
-
-    const raw = fs.readFileSync(filepath, "utf-8") //read .mdx file as a string
-
-    const {data: frontmatter, content: body} = matter(raw) //split into frontmatter + MDX body
-
-    return {slug, ...frontmatter, content: body} as Post //return single post with content include
 }
