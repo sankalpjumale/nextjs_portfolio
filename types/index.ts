@@ -57,9 +57,9 @@ export interface SystemStatus {
 
 //status level is union type and keeps status values consistent across all status components
 export type StatusLevel = 
-    | "operational"
-    | "degraded"
-    | "outrage";
+    | "operational" //everything is working normally
+    | "degraded" //working but slower 
+    | "outrage"; //completely down
 
 
 //api response is wrapper for all APi route response, both success and error returns
