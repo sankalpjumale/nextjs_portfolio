@@ -7,6 +7,7 @@ export interface Post  {
     description: string
     tags?: string[]
     published: boolean
+    content: string
 }
 
 export type PostMeta = Omit<Post, "content"> //give me post and remove content

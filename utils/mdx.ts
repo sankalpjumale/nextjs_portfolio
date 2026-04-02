@@ -7,6 +7,7 @@ import type {Post} from "@/types/index"
 const BLOG_DIR = path.join(process.cwd(), "content/blog")
 
 //return sorted array of all posts with frontmatter only (no content)
+//return PostMeta[] - no content, correct for list pages
 export function getAllPosts(): Omit<Post, "content">[] {
 
     //read all filenames in the blog directory
@@ -35,7 +36,8 @@ export function getAllPosts(): Omit<Post, "content">[] {
             slug,
             title: data.title as string,
             date: data.date as string,
-            description: data.description as string
+            description: data.description as string,
+            published: data.published as boolean
         }
     })
 
@@ -45,11 +47,16 @@ export function getAllPosts(): Omit<Post, "content">[] {
 }
 
 //returns single post with frontmatter + complied MDX content
+//return Post - includes content, correct for single post page
 export async function getPostBySlug(slug: string): Promise<Post> {
     
     const filePath = path.join(BLOG_DIR, `${slug}.mdx`)  //build full path from slug
 
-    const fileContent = fs.readFileSync(filePath, "utf-8")
+    if(!fs.existsSync(filePath)) {
+        throw new Error(`Post not found: ${slug}`)
+    }
+
+    const fileContent = await fs.readFileSync(filePath, "utf-8")
 
     const {data, content} = matter(fileContent)
 
@@ -58,6 +65,7 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         title: data.title as string,
         date: data.date as string,
         description: data.description as string,
+        published: data.published as boolean,
         content //raw MDX string - rendered by next-mdx-remote in [slug]/page.tsx
     }
 }

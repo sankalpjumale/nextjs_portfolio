@@ -9,3 +9,46 @@ description: "My first post"
 This is my first blogwritten in MDX
 
 {/* content is not code - it's data. That's why create at root */}
+
+
+
+---
+# Frontmatter — metadata parsed by gray-matter, not rendered as content
+title: "Hello World"
+date: "2024-04-02"
+description: "A test post to verify MDX rendering, frontmatter parsing, and the blog pipeline works end to end."
+slug: "hello-world"
+tags: ["test", "mdx", "setup"]
+---
+ 
+{/* Main heading — rendered as HTML h1 by MDX */}
+# Hello World
+ 
+{/* Intro paragraph — confirms basic MDX text rendering works */}
+This is a test post to verify the MDX pipeline is working correctly.
+If you can read this, frontmatter parsing, file reading, and MDX rendering are all functional.
+ 
+{/* Section: what this post is testing */}
+## What This Confirms
+ 
+{/* Each item maps to a working part of the prototype */}
+- **MDX file is found** — the file reader in `utils/mdx.ts` is working
+- **Frontmatter is parsed** — `gray-matter` extracted title, date, and slug correctly
+- **MDX is rendered** — `next-mdx-remote` compiled this file into HTML
+- **Dynamic route works** — `app/blog/[slug]/page.tsx` matched this slug
+ 
+{/* Section: sample code block — confirms syntax highlighting setup if added later */}
+## Sample Code Block
+ 
+```ts
+// A simple function — used to verify code blocks render correctly in MDX
+function greet(name: string): string {
+  return `Hello, ${name}!`; // returns a greeting string
+}
+```
+ 
+{/* Section: placeholder for future MDX component injection */}
+## Next Steps
+ 
+Once this renders correctly, this file can be deleted or kept as a reference.
+Real case study posts will follow the same frontmatter structure.
