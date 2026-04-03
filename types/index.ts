@@ -18,9 +18,19 @@ export interface Project {
     title: string;
     description: string;
     stack: string[]
-    liveUrl?: string;
-    repoUrl: string
+    links: {
+        live?: string;
+        github?: string
+    }
     featured: boolean
+}
+
+export type CaseStudy = {
+    slug: string;
+    title: string;
+    date: string;
+    summary: string;
+    stack: string[]
 }
 
 //case study extends post with problem/solution structure and use for the "problem-Solution" case study feature
