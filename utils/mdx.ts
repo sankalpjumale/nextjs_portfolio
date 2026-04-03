@@ -1,10 +1,13 @@
 import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
-import type {Post} from "@/types/index"
+import type {CaseStudy, Post} from "@/types/index"
 
 // path to content/blog directory - reused by both functions
 const BLOG_DIR = path.join(process.cwd(), "content/blog")
+
+//path case study folder
+const CASE_STUDY_DIR = path.join(process.cwd(), "content/case-studies")
 
 //return sorted array of all posts with frontmatter only (no content)
 //return PostMeta[] - no content, correct for list pages
@@ -67,5 +70,17 @@ export async function getPostBySlug(slug: string): Promise<Post> {
         description: data.description as string,
         published: data.published as boolean,
         content //raw MDX string - rendered by next-mdx-remote in [slug]/page.tsx
+    }
+}
+
+//read case study by slug, returns content + metadata
+export function getCaseStudyBySlug(slug: string) {
+    const filePath = path.join(CASE_STUDY_DIR, `${slug}.mdx`)
+    const fileContent = fs.readFileSync(filePath, "utf-8")
+    const {data, content} = matter(fileContent)
+
+    return {
+        meta: data as CaseStudy,
+        content
     }
 }
