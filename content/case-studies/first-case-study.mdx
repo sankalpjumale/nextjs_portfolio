@@ -1,0 +1,26 @@
+---
+title: "Rebuilding a Slow Dashboard from Scratch"
+date: "2026-04-04"
+summary: "A client dashboard was taking 8 seconds to load - here is how I brought it down to 400ms"
+stack: ["Next.js", "MongoDB", "TAilwind"]
+---
+
+## Problem
+The existing client dashboard was built with plain React and unoptimized MongoDB queries.
+Every page load triggered 12 separate database calls, causing a 8 seconds wait time.
+Users were dropping off before the data even appeared.
+
+## Context
+-Solo developer, 2-week timeline
+-Existing stack: React, Express, MongoDB
+-No caching layer in place
+-500+ daily active users affected
+
+## Solution
+Migrated the frontend to Next.js with server components to eliminate  unnecessary client-side fetching. Consolidated 12 queries into 2 aggregated MongoDB pipelines. Added a lightweight caching layer using Next.js `unstable_cache`.
+
+## Result
+-Load time dropped from **8 seconds -> 400ms
+-Database calls reduced from **12 -> 2**
+-User drop-off rate decreased by **60%**
+-Zero downtime during migration
