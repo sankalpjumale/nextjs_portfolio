@@ -73,6 +73,30 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     }
 }
 
+export function getCaseStudies(): CaseStudy[] {
+    const files = fs.readdirSync(CASE_STUDY_DIR)
+
+    const caseStudies = files
+        .filter((file) => file.endsWith('.mdx'))
+        .map((file) => {
+            const slug = file.replace(/\.mdx$/, '')
+
+            const raw = fs.readFileSync(path.join(CASE_STUDY_DIR, file), 'utf-8')
+
+            const {data} = matter(raw)
+
+            return {
+                slug,
+                title: data.title ?? 'Untitled',
+                date: data.date ?? '',
+                summary: data.summary ?? '',
+                stack: data.stack ?? [],
+            } as CaseStudy
+        })
+
+    return caseStudies.sort((a,b) => (a.date < b.date ? 1 : -1))
+}
+
 //read case study by slug, returns content + metadata
 export function getCaseStudyBySlug(slug: string) {
     const filePath = path.join(CASE_STUDY_DIR, `${slug}.mdx`)
