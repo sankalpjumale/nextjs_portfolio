@@ -31,30 +31,27 @@ const nextConfig: NextConfig = {
     ]
   },
 
-  //required for App Router
-  experimental: {
-    mdxRs: true
-  }
+  
 };
 
 //configure the mdx plugin with remark and rehype plugins and withmMDX wraps nextConfig 
 const withMDX = createMDX({
-  options: {
-    //remarksPlugins run during Markdown parsing
-    remarkPlugins: [
-      //remarkGfm adds github flavoured markdown: tables, strikethrough, task lists
-      remarkGfm
-    ],
+  // options: {
+  //   //remarksPlugins run during Markdown parsing
+  //   remarkPlugins: [
+  //     //remarkGfm adds github flavoured markdown: tables, strikethrough, task lists
+  //     remarkGfm
+  //   ],
 
-    //rehypePlugins run after Markdown is converted to HTML
-    rehypePlugins: [
-      //rehypeHighlight adds syntax highlighting classes to fenced code blocks
-      rehypeHighlight,
+  //   //rehypePlugins run after Markdown is converted to HTML
+  //   rehypePlugins: [
+  //     //rehypeHighlight adds syntax highlighting classes to fenced code blocks
+  //     rehypeHighlight,
 
-      //rehypeSlug adds id="..." to all heading for deep linking within posts
-      rehypeSlug
-    ]
-  }
+  //     //rehypeSlug adds id="..." to all heading for deep linking within posts
+  //     rehypeSlug
+  //   ]
+  // }
 })
 
 //withMDX wraps and merges MDX settings into nextConfig

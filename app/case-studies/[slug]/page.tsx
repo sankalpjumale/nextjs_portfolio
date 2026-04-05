@@ -28,7 +28,8 @@ export default async function CaseStudyPage({params}: PageProps) {
     return (
         <main className="min-h-screen px-4 py-12 max-w-2xl mx-auto">
             <CaseStudyLayout metadata={meta}>
-                <MDXRemote source={content} />
+                {/* <MDXRemote source={content} /> */}
+                {content}
             </CaseStudyLayout>
         </main>
     )

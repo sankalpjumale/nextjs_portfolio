@@ -2,6 +2,10 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 import type {CaseStudy, Post} from "@/types/index"
+import { compileMDX } from "next-mdx-remote/rsc"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
+import rehypeSlug from "rehype-slug"
 
 // path to content/blog directory - reused by both functions
 const BLOG_DIR = path.join(process.cwd(), "content/blog")
@@ -98,13 +102,23 @@ export function getCaseStudies(): CaseStudy[] {
 }
 
 //read case study by slug, returns content + metadata
-export function getCaseStudyBySlug(slug: string) {
+export async function getCaseStudyBySlug(slug: string) {
     const filePath = path.join(CASE_STUDY_DIR, `${slug}.mdx`)
     const fileContent = fs.readFileSync(filePath, "utf-8")
-    const {data, content} = matter(fileContent)
+    // const {data, content} = matter(fileContent)
+    const {frontmatter, content} = await compileMDX({
+        source: fileContent,
+        options: {
+            parseFrontmatter: true,
+            mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                rehypePlugins: [rehypeHighlight, rehypeSlug]
+            }
+        }
+    })
 
     return {
-        meta: data as CaseStudy,
+        meta: frontmatter as CaseStudy,
         content
     }
 }
