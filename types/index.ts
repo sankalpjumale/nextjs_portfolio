@@ -10,6 +10,7 @@ export interface Post  {
     content: string
 }
 
+//post without content field, used in listing page
 export type PostMeta = Omit<Post, "content"> //give me post and remove content
 
 //project represents a portfolio project or case study entry and use in project section and stack breakdown feature
@@ -25,28 +26,14 @@ export interface Project {
     featured: boolean
 }
 
-export type CaseStudy = {
-    slug: string;
-    title: string;
-    date: string;
-    summary: string;
-    stack: string[]
-}
-
-//case study extends post with problem/solution structure and use for the "problem-Solution" case study feature
-export interface caseStudy extends Post {
-    problem: string;
-    solution: string;
-    outcome: string;
+//with problem-solution structure used in problem-solution feature
+export interface CaseStudy extends Post {
+    problem: string
+    solution: string
+    outcome: string
     projectSlug?: string
 }
 
-//stackitem for stack breakdown and use in stack breakdown feature per project
-export interface StackItem {
-    name: string;
-    category: StackCategory;
-    url?: string
-}
 
 //stack category is union type for grouping stack items and case sensitive
 export type StackCategory =
@@ -58,9 +45,20 @@ export type StackCategory =
     | "Other";
 
 
+//stackitem for stack breakdown and use in stack breakdown feature per project
+export interface StackItem {
+    _id?: string
+    name: string;
+    category: StackCategory;
+    url?: string
+    proficiency: number
+    projectIds: string[]
+}
+
+
 //system status represents a live health of a service/project and used in automated system status feature
 export interface SystemStatus {
-    services: string;
+    service: string;
     status: StatusLevel;
     latency?: number;
     checkedAt: string
@@ -70,8 +68,7 @@ export interface SystemStatus {
 export type StatusLevel = 
     | "operational" //everything is working normally
     | "degraded" //working but slower 
-    | "outrage"; //completely down
-
+    | "outage"; //completely down
 
 //api response is wrapper for all APi route response, both success and error returns
 export interface ApiResponse<T> {
