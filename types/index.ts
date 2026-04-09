@@ -55,6 +55,14 @@ export interface StackItem {
     projectIds: string[]
 }
 
+export interface TechStack extends Document{
+    name: string
+    category: string
+    // icon: string
+    proficiency: number
+    projectIds: string[]
+}
+
 
 //system status represents a live health of a service/project and used in automated system status feature
 export interface SystemStatus {
