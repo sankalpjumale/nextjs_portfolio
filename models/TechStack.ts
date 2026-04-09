@@ -1,8 +1,8 @@
 import mongoose, { Schema, Model } from "mongoose";
 
-import {TechStack} from "@/types/index"
+import {StackItem} from "@/types/index"
 
-const TechStackSchema = new Schema<TechStack>(
+const TechStackSchema = new Schema<StackItem>(
     {
         name: {
             type: String,
@@ -36,8 +36,8 @@ const TechStackSchema = new Schema<TechStack>(
     {timestamps: true}
 )
 
-const TechStackModel: Model<TechStack> = 
+const TechStack: Model<StackItem> = 
     mongoose.models.TechStack ||
-    mongoose.model<TechStack>("TechStack", TechStackSchema)
+    mongoose.model<StackItem>("TechStack", TechStackSchema)
 
-export default TechStackModel
+export default TechStack
