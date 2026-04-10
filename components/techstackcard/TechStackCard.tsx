@@ -1,8 +1,6 @@
 import { StackItem } from "@/types";
-import { Card } from "../ui/card";
-
-
-
+import { Card, CardContent } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 interface TechStackCardProps {
     tech: StackItem
@@ -22,7 +20,32 @@ export default function TechStackCard({tech}: TechStackCardProps) {
 
     return (
         <Card className="w-full">
-            CardC
+            <CardContent className="flex flex-col gap-3 p-4">
+                <div className="flex items-center justify-between">
+                    <span className="text-2xl " aria-label={tech.name}>
+                        {tech.icon}
+                    </span>
+                    <Badge variant="secondary" className={badgeStyle}>
+                        {tech.category}
+                    </Badge>
+                </div>
+
+                <p className="text-sm font-semibold text-gray-800">{tech.name}</p>
+
+                <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between text-xs text-gray-500">
+                        <span>Proficiency</span>
+                        <span>{tech.proficiency} / 5</span>
+                    </div>
+
+                    <div className="h-1 w-full rounded-full bg-gray-100">
+                        <div 
+                            className="h-1.5 rounded-full bg-gray-800 transition-all duration-500"
+                            style={{width: `${proficiencyPercent}%`}}
+                        />
+                    </div>
+                </div>
+            </CardContent>
         </Card>
     )
 }

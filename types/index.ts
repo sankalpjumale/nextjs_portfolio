@@ -50,6 +50,7 @@ export interface StackItem {
     _id?: string
     name: string;
     category: StackCategory;
+    icon: string
     url?: string
     proficiency: number
     projectIds: string[]
