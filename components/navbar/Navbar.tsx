@@ -14,6 +14,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "Case Study", href: "/case-studies" },
   { label: "Blog", href: "/blog" },
   { label: "Projects", href: "/projects" },
+  { label: "Stacks", href: "/stack" },
   { label: "Contact", href: "/contact" },
 ]
 
