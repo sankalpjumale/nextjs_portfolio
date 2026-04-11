@@ -8,6 +8,7 @@ import { Badge } from "../ui/badge"
 const CATEGORIES = ["All", "Frontend", "Backend", "Database", "DevOps"]
 
 interface TechStackFilterProps {
+    categories: string[]
     activeFilter: string
     onFilterChange: (category: string) => void
     stacks: StackItem[]
