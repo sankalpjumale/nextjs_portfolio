@@ -79,6 +79,35 @@ export type StatusLevel =
     | "degraded" //working but slower 
     | "outage"; //completely down
 
+// single service or project being monitored, soted in mongodb using service model
+export interface Service {
+    _id?: string
+    name: string
+    url: string
+    description: string
+    isActive: boolean
+}
+
+// live result of a single status check, returned by API route , used in StatusCard component, combines service info with the real time check result
+export interface ServiceStatus {
+    serviceId: string
+    name: string
+    url: string
+    description: string
+    status: StatusLevel
+    responseTime: number
+    lastChecked: string
+}
+
+// one recorded check saved to MongoDB, used by StatusHistory component to show uptime over time
+export interface StatusHistory {
+    _id?: string
+    serviceId: string
+    status: StatusLevel
+    responseTime: number
+    checkedAt: string
+}
+
 //api response is wrapper for all APi route response, both success and error returns
 export interface ApiResponse<T> {
     success: boolean;
