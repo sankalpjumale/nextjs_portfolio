@@ -81,7 +81,7 @@ export type StatusLevel =
 
 // single service or project being monitored, soted in mongodb using service model
 export interface Service {
-    _id?: string
+    _id?: string //mongodb document id
     name: string
     url: string
     description: string
@@ -90,13 +90,14 @@ export interface Service {
 
 // live result of a single status check, returned by API route , used in StatusCard component, combines service info with the real time check result
 export interface ServiceStatus {
-    serviceId: string
+    _id: string //mongodb _id of this service, used to link history records
+    // serviceId: string
     name: string
     url: string
     description: string
     status: StatusLevel
     responseTime: number
-    lastChecked: string
+    lastChecked: Date
 }
 
 // one recorded check saved to MongoDB, used by StatusHistory component to show uptime over time
