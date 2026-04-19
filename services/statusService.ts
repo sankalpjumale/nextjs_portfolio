@@ -3,7 +3,7 @@ import type { ServiceStatus, StatusHistory } from "@/types";
 const BASE_URL = "/api/status"
 
 //fetch live current status, called by zusatnd store fetchStatus(), return array of ServiceStatus object
-export async function getCurrentStatus(): Promise<ServiceStatus> {
+export async function getCurrentStatus(): Promise<ServiceStatus[]> {
 
     const response = await fetch(BASE_URL, {
         cache: "no-store" //no-store for always get fresh data not a cached response

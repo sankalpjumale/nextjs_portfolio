@@ -75,9 +75,9 @@ export interface SystemStatus {
 
 //status level is union type and keeps status values consistent across all status components
 export type StatusLevel = 
-    | "operational" //everything is working normally
+    | "up" //everything is working normally
     | "degraded" //working but slower 
-    | "outage"; //completely down
+    | "down"; //completely down
 
 // single service or project being monitored, soted in mongodb using service model
 export interface Service {
