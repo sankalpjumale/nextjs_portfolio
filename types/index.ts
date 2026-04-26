@@ -98,6 +98,7 @@ export interface ServiceStatus {
     status: StatusLevel
     responseTime: number
     lastChecked: Date
+    uptime?: number //percetage
 }
 
 // one recorded check saved to MongoDB, used by StatusHistory component to show uptime over time
