@@ -1,13 +1,15 @@
-import {IStatusHistory as StatusHistoryType} from "@/models/StatusHistory";
+// import {IStatusHistory as StatusHistoryType} from "@/models/StatusHistory";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { ScrollArea } from "../ui/scroll-area";
+import { StatusHistory as StatusHistoryType } from "@/types";
 
 interface StatusHistoryProps {
   history: StatusHistoryType[];
   serviceName: string
+  serviceId: string
 }
 
 const dotColor: Record<StatusHistoryType["status"], string> = {
@@ -45,7 +47,7 @@ function formatFull(dateStr: string | Date): string {
   })
 }
 
-export default function StatusHistory({history, serviceName}: StatusHistoryProps) {
+export default function StatusHistory({history, serviceName, serviceId}: StatusHistoryProps) {
 
   const recent = history.slice(0, 10)
 

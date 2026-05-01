@@ -98,6 +98,7 @@ export interface ServiceStatus {
     status: StatusLevel
     responseTime: number
     lastChecked: Date
+    history?:StatusHistory[]
     uptime?: number //percetage
 }
 

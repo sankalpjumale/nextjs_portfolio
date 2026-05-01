@@ -7,6 +7,8 @@ import { Badge } from "../ui/badge";
 // props full array of services with current status
 interface StatusGridProps {
   services: ServiceStatus[]
+  onSelect: (service: ServiceStatus) => void
+  selectedServiceName: string | null
 }
 
 // return one of three possible state
@@ -43,7 +45,7 @@ const healthConfig = {
   },
 }
 
-function StatusGrid({services}: StatusGridProps) {
+function StatusGrid({services, onSelect, selectedServiceName}: StatusGridProps) {
 
   const health = getOverallHealth(services)
   const config = healthConfig[health]
@@ -77,6 +79,8 @@ function StatusGrid({services}: StatusGridProps) {
           <StatusCard 
             key={service.name}
             service={service}
+            isSelected={selectedServiceName === service.name}
+            onClick={() => onSelect(service)}
           />
         ))}
       </div>

@@ -6,6 +6,8 @@ import StatusBadge from '../statusbadge/StatusBadge'
 
 interface StatusCardProps {
     service: ServiceStatus
+    isSelected: boolean
+    onClick: () => void
 }
 
 function formatLastChecked(lastChecked: string | Date): string {
